@@ -43,27 +43,64 @@ def dias_de_folga(frequencia, funcionario, mes):
 
 
 # Faz uma lista com os dias para poder ser usada pela biblioteca tabulate.
-def nome_das_colunas(lista_col_nomes, mes):
+def nome_das_colunas(lista_col_dias, mes):
    for i in range(1,(mes + 1)):
-       lista_col_nomes.append(i)
+       lista_col_dias.append(i)
 
 
-#teste
-paulo = Funcionario("Paulo")
-dias_de_folga(5, paulo, meses_do_ano["Fevereiro"])
+# Função para criar um objeto funcionário por meio de input
+def add_funcionario():
+    funcionario = input("Qual o nome do funcionário? ")
+    quantos_dias_de_trabalho = input("Quantos dias de serviço para um dia de folga? ")
+    mes = input("Qual o mês corrente? ")
+
+    nome = Funcionario(funcionario)
+    funcionario.primeira_folga = quantos_dias_de_trabalho
 
 
-roberto = Funcionario("Roberto")
-dias_de_folga(4, roberto, meses_do_ano["Fevereiro"])
-
-col_nomes = ["Funcionários"]
-nome_das_colunas(col_nomes, meses_do_ano["Fevereiro"])
+    dias_de_folga(funcionario.primeira_folga, nome, mes)
 
 
-data = [paulo.lista, roberto.lista]
+# def rodar_o_codigo():
+#
+#     parar = 0
+#
+#     while True:
+#         parar = input("Para criar uma tabela aperte 0, para parar o programa aperte 1: ")
+#
+#         if parar == 0:
+#             parar_1 = 0
+#
+#             while True:
+#                 add_funcionario()
+#
+#
+#
+#
+#
+#         elif == 1:
 
 
-print(tabulate(data, headers= col_nomes, tablefmt="psql"))
+
+
+
+
+# #teste
+# paulo = Funcionario("Paulo")
+# dias_de_folga(5, paulo, meses_do_ano["Fevereiro"])
+#
+#
+# roberto = Funcionario("Roberto")
+# dias_de_folga(4, roberto, meses_do_ano["Fevereiro"])
+#
+# col_nomes = ["Funcionários"]
+# nome_das_colunas(col_nomes, meses_do_ano["Fevereiro"])
+#
+#
+# data = [paulo.lista, roberto.lista]
+#
+#
+# print(tabulate(data, headers= col_nomes, tablefmt="psql"))
 
 
 
