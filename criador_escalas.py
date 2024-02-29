@@ -1,4 +1,10 @@
 from tabulate import tabulate
+import sys
+
+data = []
+col_names = []
+
+
 
 class Funcionario:
 
@@ -21,91 +27,87 @@ meses_do_ano = {"Janeiro":31, "Fevereiro":28, "Março":31, "Abril":30, "Maio":31
 # pela biblioteca tabulate.
 
 # Frequência é quantos dias o funcionário vai trabalhar para folgar
-def dias_de_folga(frequencia, funcionario, mes):
+def dias_de_folga(frequencia, nome, mes):
 
-    if funcionario.primeira_folga is None:
-        funcionario.primeira_folga = frequencia
-        funcionario.lista.append(funcionario.nome)
-        return dias_de_folga(funcionario.primeira_folga, funcionario, mes)
+    if nome.primeira_folga is None:
+        nome.primeira_folga = frequencia
+        nome.lista.append(nome.nome)
+        return dias_de_folga(nome.primeira_folga, nome, mes)
 
-    elif funcionario.primeira_folga >= 1 and len(funcionario.lista) < (mes + 1):
+    elif nome.primeira_folga >= 1 and len(nome.lista) < (meses_do_ano[mes] + 1):
         for i in range(frequencia):
-            if len(funcionario.lista) == (mes + 1):
+            if len(nome.lista) == (meses_do_ano[mes] + 1):
                 break
             else:
-                funcionario.lista.append("o")
+                nome.lista.append("o")
         for i in range(1):
-            if len(funcionario.lista) == (mes + 1):
+            if len(nome.lista) == (meses_do_ano[mes] + 1):
                 break
             else:
-                funcionario.lista.append("x")
-        return dias_de_folga(funcionario.primeira_folga, funcionario, mes)
+                nome.lista.append("x")
+        return dias_de_folga(nome.primeira_folga, nome, mes)
 
 
 # Faz uma lista com os dias para poder ser usada pela biblioteca tabulate.
-def nome_das_colunas(lista_col_dias, mes):
+def nome_das_colunas(col_names, mes):
+   col_names.append("Funcionários")
    for i in range(1,(mes + 1)):
-       lista_col_dias.append(i)
+       col_names.append(i)
 
 
 # Função para criar um objeto funcionário por meio de input
-def add_funcionario():
+def add_funcionario(data,mes):
     funcionario = input("Qual o nome do funcionário? ")
-    quantos_dias_de_trabalho = input("Quantos dias de serviço para um dia de folga? ")
-    mes = input("Qual o mês corrente? ")
-
     nome = Funcionario(funcionario)
-    funcionario.primeira_folga = quantos_dias_de_trabalho
 
 
-    dias_de_folga(funcionario.primeira_folga, nome, mes)
+    quantos_dias_de_trabalho = int(input("Quantos dias de serviço para um dia de folga? "))
 
 
-# def rodar_o_codigo():
-#
-#     parar = 0
-#
-#     while True:
-#         parar = input("Para criar uma tabela aperte 0, para parar o programa aperte 1: ")
-#
-#         if parar == 0:
-#             parar_1 = 0
-#
-#             while True:
-#                 add_funcionario()
-#
-#
-#
-#
-#
-#         elif == 1:
+
+    nome.primeira_folga = quantos_dias_de_trabalho
+
+
+    dias_de_folga(nome.primeira_folga, nome, mes)
+
+    data.append(nome.lista)
 
 
 
 
 
 
-# #teste
-# paulo = Funcionario("Paulo")
-# dias_de_folga(5, paulo, meses_do_ano["Fevereiro"])
-#
-#
-# roberto = Funcionario("Roberto")
-# dias_de_folga(4, roberto, meses_do_ano["Fevereiro"])
-#
-# col_nomes = ["Funcionários"]
-# nome_das_colunas(col_nomes, meses_do_ano["Fevereiro"])
-#
-#
-# data = [paulo.lista, roberto.lista]
-#
-#
-# print(tabulate(data, headers= col_nomes, tablefmt="psql"))
+
+def rodar_o_codigo(data, col_names,mes):
+
+
+        parar = input("Para criar uma tabela aperte 0, para parar o programa aperte 1: ")
+        mes = input("Qual o mês corrente? ")
+
+        if parar == "0":
+            add_funcionario(data,mes)
+
+
+            novo_funcionario = input( "Se você quer adicionar mais um funcionário aperte 0,"
+                                      " para criar a tabela aperte 1:")
+
+            if novo_funcionario == "0":
+                add_funcionario(data,mes)
+            elif novo_funcionario == "1":
+                nome_das_colunas(col_names, meses_do_ano[mes])
+                print(tabulate(data, headers=col_names))
+
+        elif parar == "1":
+            print("Programa finalizado")
+            exit()
 
 
 
 
 
 
+
+
+rodar_o_codigo(data, col_names,"Fevereiro")
 
 
