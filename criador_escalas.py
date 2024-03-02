@@ -16,7 +16,7 @@ class Funcionario:
 
 # Lista com meses do ano para poder modificar mais facilmente quantos dias tem a tabela e quantos dias de folga será
 # gerada pela função.
-meses_do_ano = {"Janeiro":31, "Fevereiro":28, "Março":31, "Abril":30, "Maio":31, "Junho":30,
+meses_do_ano = {"Janeiro":31, "Fevereiro":29, "Março":31, "Abril":30, "Maio":31, "Junho":30,
                 "Julho":31, "Agosto":31, "Setembro":30, "Outubro":31, "Novembro":30,
                  "Dezembro":31}
 
@@ -34,14 +34,14 @@ def dias_de_folga(frequencia, nome, mes):
         nome.lista.append(nome.nome)
         return dias_de_folga(nome.primeira_folga, nome, mes)
 
-    elif nome.primeira_folga >= 1 and len(nome.lista) < (meses_do_ano[mes] + 1):
+    elif nome.primeira_folga >= 1 and len(nome.lista) < (meses_do_ano[mes]+1):
         for i in range(frequencia):
-            if len(nome.lista) == (meses_do_ano[mes] + 1):
+            if len(nome.lista) == (meses_do_ano[mes]+1):
                 break
             else:
                 nome.lista.append("o")
         for i in range(1):
-            if len(nome.lista) == (meses_do_ano[mes] + 1):
+            if len(nome.lista) == (meses_do_ano[mes]+1):
                 break
             else:
                 nome.lista.append("x")
@@ -51,7 +51,7 @@ def dias_de_folga(frequencia, nome, mes):
 # Faz uma lista com os dias para poder ser usada pela biblioteca tabulate.
 def nome_das_colunas(col_names, mes):
    col_names.append("Funcionários")
-   for i in range(1,(mes + 1)):
+   for i in range(1,(meses_do_ano[mes] + 1)):
        col_names.append(i)
 
 
@@ -64,11 +64,7 @@ def add_funcionario(data,mes):
     quantos_dias_de_trabalho = int(input("Quantos dias de serviço para um dia de folga? "))
 
 
-
-    nome.primeira_folga = quantos_dias_de_trabalho
-
-
-    dias_de_folga(nome.primeira_folga, nome, mes)
+    dias_de_folga(quantos_dias_de_trabalho, nome, mes)
 
     data.append(nome.lista)
 
@@ -78,7 +74,7 @@ def add_funcionario(data,mes):
 
 
 
-def rodar_o_codigo(data, col_names,mes):
+def rodar_o_codigo(data, col_names):
 
 
         parar = input("Para criar uma tabela aperte 0, para parar o programa aperte 1: ")
@@ -94,8 +90,8 @@ def rodar_o_codigo(data, col_names,mes):
             if novo_funcionario == "0":
                 add_funcionario(data,mes)
             elif novo_funcionario == "1":
-                nome_das_colunas(col_names, meses_do_ano[mes])
-                print(tabulate(data, headers=col_names))
+                nome_das_colunas(col_names,mes)
+                print(tabulate(data, headers=col_names, tablefmt="psql"))
 
         elif parar == "1":
             print("Programa finalizado")
@@ -108,6 +104,6 @@ def rodar_o_codigo(data, col_names,mes):
 
 
 
-rodar_o_codigo(data, col_names,"Fevereiro")
+rodar_o_codigo(data, col_names)
 
 
