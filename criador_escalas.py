@@ -70,40 +70,48 @@ def add_funcionario(data,mes):
 
 
 
+# Função para rodar o código e repetir, além de adicionar mais nomes à tabela conforme a vontade do usuário
+# quando usuário quiser
+def vai_para(data, col_names):
+    parar = 0
+
+    parar = input("Para criar uma tabela aperte 0, para parar o programa aperte 1: ")
 
 
 
-
-def rodar_o_codigo(data, col_names):
-
-
-        parar = input("Para criar uma tabela aperte 0, para parar o programa aperte 1: ")
+    while int(parar) < 1:
         mes = input("Qual o mês corrente? ")
+        add_funcionario(data,mes)
 
-        if parar == "0":
-            add_funcionario(data,mes)
+        novo_funcionario = int(input("Se você quer adicionar mais um funcionário aperte 0,"
+                                 " para criar a tabela aperte 1:"))
 
+        while int(novo_funcionario) < 1:
+            add_funcionario(data, mes)
 
-            novo_funcionario = input( "Se você quer adicionar mais um funcionário aperte 0,"
-                                      " para criar a tabela aperte 1:")
+            novo_funcionario = int(input("Se você quer adicionar mais um funcionário aperte 0,"
+                                     " para criar a tabela aperte 1:"))
 
-            if novo_funcionario == "0":
-                add_funcionario(data,mes)
-            elif novo_funcionario == "1":
-                nome_das_colunas(col_names,mes)
-                print(tabulate(data, headers=col_names, tablefmt="psql"))
+            if novo_funcionario == 0:
+                novo_funcionario == 0
+            else:
+                novo_funcionario += 1
 
-        elif parar == "1":
-            print("Programa finalizado")
-            exit()
-
-
-
+        nome_das_colunas(col_names, mes)
+        print(tabulate(data, headers=col_names, tablefmt="psql"))
 
 
 
+        parar = int(input("Quer fazer outra tabela ?[0 sim/1 não]"))
+
+        if parar == 0:
+            parar == 0
+        else:
+            parar += 1
+            print("Programa Finalizado !!!")
 
 
-rodar_o_codigo(data, col_names)
 
+
+vai_para(data, col_names)
 
