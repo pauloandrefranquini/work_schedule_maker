@@ -16,9 +16,9 @@ class Funcionario:
 
 # Lista com meses do ano para poder modificar mais facilmente quantos dias tem a tabela e quantos dias de folga será
 # gerada pela função.
-meses_do_ano = {"Janeiro":31, "Fevereiro":29, "Março":31, "Abril":30, "Maio":31, "Junho":30,
-                "Julho":31, "Agosto":31, "Setembro":30, "Outubro":31, "Novembro":30,
-                 "Dezembro":31}
+meses_do_ano = {"JANEIRO":31, "FEVEREIRO":29, "MARÇO":31, "ABRIL":30, "MAIO":31, "JUNHO":30,
+                "JULHO":31, "AGOSTO":31, "SETEMBRO":30, "OUTUBRO":31, "NOVEMBRO":30,
+                 "DEZEMBRO":31}
 
 
 
@@ -28,24 +28,27 @@ meses_do_ano = {"Janeiro":31, "Fevereiro":29, "Março":31, "Abril":30, "Maio":31
 
 # Frequência é quantos dias o funcionário vai trabalhar para folgar
 def dias_de_folga(frequencia, nome, mes):
+    try:
+        if nome.primeira_folga is None:
+            nome.primeira_folga = frequencia
+            nome.lista.append(nome.nome)
+            return dias_de_folga(nome.primeira_folga, nome, mes)
 
-    if nome.primeira_folga is None:
-        nome.primeira_folga = frequencia
-        nome.lista.append(nome.nome)
-        return dias_de_folga(nome.primeira_folga, nome, mes)
-
-    elif nome.primeira_folga >= 1 and len(nome.lista) < (meses_do_ano[mes]+1):
-        for i in range(frequencia):
-            if len(nome.lista) == (meses_do_ano[mes]+1):
-                break
-            else:
-                nome.lista.append("o")
-        for i in range(1):
-            if len(nome.lista) == (meses_do_ano[mes]+1):
-                break
-            else:
-                nome.lista.append("x")
-        return dias_de_folga(nome.primeira_folga, nome, mes)
+        elif nome.primeira_folga >= 1 and len(nome.lista) < (meses_do_ano[mes]+1):
+            for i in range(frequencia):
+                if len(nome.lista) == (meses_do_ano[mes]+1):
+                    break
+                else:
+                    nome.lista.append("o")
+            for i in range(1):
+                if len(nome.lista) == (meses_do_ano[mes]+1):
+                    break
+                else:
+                    nome.lista.append("x")
+            return dias_de_folga(nome.primeira_folga, nome, mes)
+    except KeyError:
+        print("Você escreveu o nome do mês de forma incorreta!")
+        vai_para(data, col_names)
 
 
 # Faz uma lista com os dias para poder ser usada pela biblioteca tabulate.
@@ -80,7 +83,7 @@ def vai_para(data, col_names):
 
 
     while int(parar) < 1:
-        mes = input("Qual o mês corrente? ")
+        mes = input("Qual o mês corrente? ").upper()
         add_funcionario(data,mes)
 
         novo_funcionario = int(input("Se você quer adicionar mais um funcionário aperte 0,"
@@ -115,3 +118,4 @@ def vai_para(data, col_names):
 
 vai_para(data, col_names)
 
+# "data" são os dados para a tabela, enquanto os headers são os topos de cada tabela
