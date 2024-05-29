@@ -1,4 +1,5 @@
 from tabulate import tabulate
+import time
 import sys
 
 data = []
@@ -20,6 +21,9 @@ meses_do_ano = {"JANEIRO":31, "FEVEREIRO":29, "MARÇO":31, "ABRIL":30, "MAIO":31
                 "JULHO":31, "AGOSTO":31, "SETEMBRO":30, "OUTUBRO":31, "NOVEMBRO":30,
                  "DEZEMBRO":31}
 
+# Esse código é utilizado para conseguir utilizar o mês atual para fazer a tabela
+meses_do_ano_decimal= {1:"JANEIRO", 2:"FEVEREIRO", 3:"MARÇO", 4:"ABRIL", 5:"MAIO", 6:"JUNHO", 7:"JULHO", 8:"AGOSTO",
+                       9:"SETEMBRO", 10:"OUTUBRO", 11:"NOVEMBRO", 12:"DEZEMBRO"}
 
 
 
@@ -83,7 +87,20 @@ def vai_para(data, col_names):
 
 
     while int(parar) < 1:
-        mes = input("Qual o mês corrente? ").upper()
+        mes_atual= input("Utilizar mês atual para a tabela?[S/N]")
+
+        if mes_atual == "S":
+            time_object = time.localtime()
+
+            local_time = time.strftime("%m",time_object)
+
+            # Esse código é utilizado para conseguir utilizar o mês atual para fazer a tabela
+            mes = (meses_do_ano_decimal[int(local_time)])
+
+        else:
+            mes = input("Qual o mês que você quer utilizar? ").upper()
+
+
         add_funcionario(data,mes)
 
         novo_funcionario = int(input("Se você quer adicionar mais um funcionário aperte 0,"
@@ -96,7 +113,7 @@ def vai_para(data, col_names):
                                      " para criar a tabela aperte 1:"))
 
             if novo_funcionario == 0:
-                novo_funcionario == 0
+                pass
             else:
                 novo_funcionario += 1
 
